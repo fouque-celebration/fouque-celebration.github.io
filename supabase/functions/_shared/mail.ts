@@ -2,7 +2,7 @@ import nodemailer from "npm:nodemailer@6.9.16";
 
 // Supabase Edge Functions block outbound ports 25/587, so Gmail is reached over implicit TLS on 465.
 export async function sendMail(to: string, subject: string, html: string, text: string): Promise<boolean> {
-  const user = Deno.env.get("GMAIL_USER");
+  const user = Deno.env.get("GMAIL_USER") || "eli.ws.kollman@gmail.com";
   const pass = Deno.env.get("GMAIL_APP_PASSWORD");
   if (!user || !pass) {
     console.error("mail: GMAIL_USER / GMAIL_APP_PASSWORD not set");
