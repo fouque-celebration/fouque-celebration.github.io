@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Organizer · RSVPs · Celebrating Jean-Pierre Fouque</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#F4F1EA;--ink:#1A2338;--muted:#575E6B;--line:#CBC5B8;--navy:#14203A;--ivory:#EEE8DB;--gold:#C7AC74;--sel:#E9E6DD;--err:#9B2C2C;--ui:'IBM Plex Sans',system-ui,sans-serif;--disp:'Newsreader',Georgia,serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui)}
+header{background:var(--navy);color:var(--ivory)}
+.hd{max-width:1280px;margin:0 auto;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.lbl{font:600 11px/1.3 var(--ui);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0}
+.hint{font:400 14px/1.5 var(--ui);color:var(--muted);margin:0}
+main{max-width:1280px;margin:0 auto;padding:48px 28px 80px}
+h1{margin:0;font:300 44px/1.05 var(--disp)}
+h1 em{font-weight:400}
+.card{max-width:440px;margin:40px 0 0;padding:32px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:20px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field input{font:400 16px/1.4 var(--ui);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 14px;min-height:50px;width:100%}
+.field input#code{font:500 24px/1 var(--ui);letter-spacing:.4em}
+input:focus,button:focus-visible,select:focus{outline:2px solid var(--ink);outline-offset:2px}
+.btn{font:600 13px/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--bg);background:var(--ink);border:0;border-radius:4px;padding:0 24px;min-height:48px;cursor:pointer}
+.btn[disabled]{opacity:.6}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.linkbtn{font:500 14px/1 var(--ui);color:inherit;background:none;border:0;border-bottom:1px solid currentColor;padding:6px 0;min-height:44px;cursor:pointer}
+.err{color:var(--err);font:500 14px/1.5 var(--ui);margin:0}
+[hidden]{display:none!important}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:32px 0 0}
+.stat{background:#fff;padding:20px;display:flex;flex-direction:column;gap:6px}
+.stat b{font:400 40px/1 var(--disp)}
+.diet{margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 13px/1 var(--ui);padding:8px 12px;background:var(--sel);border-radius:999px}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:40px 0 16px}
+.bar .l{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.bar input,.bar select{font:400 15px/1.3 var(--ui);border:1px solid var(--line);border-radius:4px;padding:10px 12px;min-height:44px;background:#fff;color:var(--ink)}
+.tbl{overflow-x:auto;border:1px solid var(--line);background:#fff}
+table{border-collapse:collapse;width:100%;min-width:900px;font:400 14px/1.45 var(--ui)}
+th{text-align:left;font:600 11px/1.3 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--ink);background:#FAF8F3;position:sticky;top:0;cursor:pointer;white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid #E6E1D6;vertical-align:top}
+tr:last-child td{border-bottom:0}
+.yes{color:#1E5B3A;font-weight:500}.no{color:#7A2E2E;font-weight:500}
+.empty{padding:48px;text-align:center}
+</style>
+</head>
+<body>
+<header><div class="hd"><span class="lbl" style="color:var(--ivory)">Organizer · RSVPs</span><span class="lbl" style="color:var(--gold)">Celebrating Jean-Pierre Fouque</span></div></header>
+<main>
+<h1>RSVP <em>responses</em></h1>
+
+<!-- Sign in -->
+<section id="login" hidden>
+<form class="card" id="f1" novalidate>
+<p class="hint">Organizers only. Enter your email and we'll send a 6-digit sign-in code.</p>
+<label class="field"><span class="lbl">Organizer email</span><input type="email" id="em" autocomplete="email" required></label>
+<p class="err" id="e1" role="alert" hidden></p>
+<div><button class="btn" id="b1">Send code</button></div>
+</form>
+<form class="card" id="f2" novalidate hidden>
+<p class="hint" id="sentTo"></p>
+<label class="field"><span class="lbl">6-digit code</span><input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required></label>
+<p class="err" id="e2" role="alert" hidden></p>
+<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap"><button class="btn" id="b2">Sign in</button><button type="button" class="linkbtn" id="restart">Use a different email</button></div>
+</form>
+</section>
+
+<!-- Dashboard -->
+<section id="dash" hidden>
+<div class="stats" id="stats"></div>
+<div class="diet" id="dietChips"></div>
+<div class="bar">
+<div class="l">
+<label><span class="lbl" style="display:block;margin-bottom:6px">Search</span><input type="search" id="q" placeholder="Name or email"></label>
+<label><span class="lbl" style="display:block;margin-bottom:6px">Show</span><select id="flt"><option value="all">All responses</option><option value="yes">Attending</option><option value="no">Not attending</option><option value="thu">Thursday dinner</option><option value="fri">Friday talks</option></select></label>
+</div>
+<div class="l"><button class="btn ghost" id="refresh" type="button">Refresh</button><button class="btn" id="csv" type="button">Download CSV</button></div>
+</div>
+<div class="tbl"><table>
+<thead><tr><th data-k="name">Name</th><th data-k="email">Email</th><th data-k="attending">Response</th><th data-k="days">Days</th><th data-k="diet">Dietary</th><th data-k="diet_notes">Notes</th><th data-k="updated_at">Last updated</th></tr></thead>
+<tbody id="tb"></tbody>
+</table></div>
+<p class="hint" style="margin-top:16px" id="who"></p>
+<p style="margin-top:8px"><button type="button" class="linkbtn" id="out">Sign out</button></p>
+</section>
+</main>
+
+<script>
+(function(){
+  var API='https://sfwrxbnzbamoxdyquwls.supabase.co/functions/v1/organizer';
+  var $=function(id){return document.getElementById(id)};
+  var KEY='fq_org_token', rows=[], sortK='updated_at', sortDir=-1, email='';
+  var DAYS={thu:'Thursday',fri:'Friday',both:'Both days'};
+  function call(body){return fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json().then(function(j){if(!r.ok)throw Object.assign(new Error(j.error||'Request failed'),{status:r.status});return j})})}
+  function tok(){try{return sessionStorage.getItem(KEY)}catch(e){return null}}
+  function setTok(t){try{t?sessionStorage.setItem(KEY,t):sessionStorage.removeItem(KEY)}catch(e){}}
+  function view(v){$('login').hidden=v!=='login';$('dash').hidden=v!=='dash'}
+  function err(el,m){el.textContent=m;el.hidden=!m}
+
+  $('f1').addEventListener('submit',function(e){e.preventDefault();email=$('em').value.trim().toLowerCase();err($('e1'),'');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return err($('e1'),'Please enter a valid email.');
+    $('b1').disabled=true;call({action:'request_code',email:email}).then(function(){
+      $('sentTo').textContent='If '+email+' is an organizer address, a code is on its way. It expires in 10 minutes.';
+      $('f1').hidden=true;$('f2').hidden=false;$('code').focus();
+    }).catch(function(x){err($('e1'),x.message)}).then(function(){$('b1').disabled=false})});
+  $('f2').addEventListener('submit',function(e){e.preventDefault();err($('e2'),'');$('b2').disabled=true;
+    call({action:'verify',email:email,code:$('code').value}).then(function(j){setTok(j.token);load()})
+    .catch(function(x){err($('e2'),x.message)}).then(function(){$('b2').disabled=false})});
+  $('restart').addEventListener('click',function(){$('f2').hidden=true;$('f1').hidden=false;$('code').value='';$('em').focus()});
+  $('out').addEventListener('click',function(){setTok(null);rows=[];view('login');$('f2').hidden=true;$('f1').hidden=false});
+  $('refresh').addEventListener('click',load);
+  $('q').addEventListener('input',render);$('flt').addEventListener('change',render);
+  document.querySelectorAll('th[data-k]').forEach(function(th){th.addEventListener('click',function(){var k=th.getAttribute('data-k');sortDir=sortK===k?-sortDir:1;sortK=k;render()})});
+
+  function load(){
+    var t=tok(); if(!t){view('login');return}
+    call({action:'responses',token:t}).then(function(j){rows=j.rows||[];$('who').textContent='Signed in as '+j.viewer+'. Session lasts 12 hours on this tab.';view('dash');stats();render()})
+    .catch(function(x){setTok(null);view('login');if(x.status===401)err($('e1'),x.message)});
+  }
+  function fmt(d){return new Date(d).toLocaleString(undefined,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})}
+  function stats(){
+    var yes=rows.filter(function(r){return r.attending}), no=rows.length-yes.length;
+    var thu=yes.filter(function(r){return r.days==='thu'||r.days==='both'}).length, fri=yes.filter(function(r){return r.days==='fri'||r.days==='both'}).length;
+    var s=[['Responses',rows.length],['Attending',yes.length],['Not attending',no],['Thursday dinner',thu],['Friday talks',fri]];
+    var box=$('stats');box.textContent='';
+    s.forEach(function(x){var d=document.createElement('div');d.className='stat';var l=document.createElement('span');l.className='lbl';l.textContent=x[0];var b=document.createElement('b');b.textContent=x[1];d.appendChild(l);d.appendChild(b);box.appendChild(d)});
+    var dc={};yes.forEach(function(r){if(r.diet&&r.diet!=='No restrictions')dc[r.diet]=(dc[r.diet]||0)+1});
+    var c=$('dietChips');c.textContent='';
+    Object.keys(dc).sort().forEach(function(k){var sp=document.createElement('span');sp.className='chip';sp.textContent=k+' · '+dc[k];c.appendChild(sp)});
+  }
+  function filtered(){
+    var q=$('q').value.trim().toLowerCase(), f=$('flt').value;
+    return rows.filter(function(r){
+      if(q&&(r.name+' '+r.email).toLowerCase().indexOf(q)<0)return false;
+      if(f==='yes')return r.attending; if(f==='no')return !r.attending;
+      if(f==='thu')return r.attending&&(r.days==='thu'||r.days==='both');
+      if(f==='fri')return r.attending&&(r.days==='fri'||r.days==='both');
+      return true;
+    }).sort(function(a,b){var x=a[sortK],y=b[sortK];x=x==null?'':x;y=y==null?'':y;return (x>y?1:x<y?-1:0)*sortDir});
+  }
+  function render(){
+    var tb=$('tb');tb.textContent='';var list=filtered();
+    if(!list.length){var tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=7;td.className='empty hint';td.textContent=rows.length?'No responses match.':'No responses yet.';tr.appendChild(td);tb.appendChild(tr);return}
+    list.forEach(function(r){
+      var tr=document.createElement('tr');
+      [[r.name],[r.email],[r.attending?'Attending':'Not attending',r.attending?'yes':'no'],[r.attending?DAYS[r.days]||'':'—'],[r.attending?r.diet||'':'—'],[r.diet_notes||''],[fmt(r.updated_at)+(r.submit_count>1?' · edited':'')]]
+      .forEach(function(c){var td=document.createElement('td');td.textContent=c[0];if(c[1])td.className=c[1];tr.appendChild(td)});
+      tb.appendChild(tr);
+    });
+  }
+  $('csv').addEventListener('click',function(){
+    var head=['Name','Email','Attending','Days','Thursday dinner','Friday talks','Dietary preference','Dietary notes','First submitted','Last updated','Times submitted'];
+    var q=function(v){v=v==null?'':String(v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};
+    var lines=[head.map(q).join(',')];
+    rows.slice().sort(function(a,b){return a.name.localeCompare(b.name)}).forEach(function(r){
+      lines.push([r.name,r.email,r.attending?'Yes':'No',r.attending?DAYS[r.days]:'',r.attending&&(r.days==='thu'||r.days==='both')?'Yes':'No',r.attending&&(r.days==='fri'||r.days==='both')?'Yes':'No',r.attending?r.diet:'',r.diet_notes,r.created_at,r.updated_at,r.submit_count].map(q).join(','));
+    });
+    var blob=new Blob(['﻿'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fouque-rsvps-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
+  });
+  load();
+})();
+</script>
+</body>
+</html>
