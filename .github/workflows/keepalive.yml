@@ -1,0 +1,22 @@
+name: Keep Supabase awake
+
+# Supabase pauses free projects after ~7 days without activity, which breaks the RSVP form.
+# Ping the database twice a week (Mon and Thu, ~8am Pacific). Can also be run by hand from the Actions tab.
+on:
+  schedule:
+    - cron: "17 15 * * 1,4"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping keepalive function
+        run: |
+          for i in 1 2 3; do
+            if curl -fsS --max-time 60 https://sfwrxbnzbamoxdyquwls.supabase.co/functions/v1/keepalive; then exit 0; fi
+            echo "attempt $i failed; retrying"; sleep 30
+          done
+          echo "::error::Supabase keepalive failed. The project may be paused: restore it at https://supabase.com/dashboard/project/sfwrxbnzbamoxdyquwls"
+          exit 1

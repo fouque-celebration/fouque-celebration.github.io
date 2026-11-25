@@ -4,6 +4,7 @@
 - `supabase/functions/` — Edge Functions on project `sfwrxbnzbamoxdyquwls`:
   - `rsvp` — validates and upserts a response by email, sends a confirmation via Gmail SMTP (465).
   - `sheet-export` — read-only CSV of all RSVPs for a Google Sheet (`=IMPORTDATA("…/functions/v1/sheet-export?token=…")`). Tokens live in the `sheet_export_tokens` table, never in this repo.
+  - `keepalive` — one tiny DB query; pinged Mon/Thu by `.github/workflows/keepalive.yml` so the free-tier project isn't paused for inactivity. A failed run emails the repo owner.
   - `organizer` — emails a 6-digit sign-in code to allow-listed organizers, issues a 12h signed session, returns responses.
 - Data: `rsvps`, `organizers`, `login_codes`, `sheet_export_tokens` tables. RLS on, no policies, privileges revoked from `anon`/`authenticated`: only the functions (service role) can read or write.
 - Secrets: `GMAIL_APP_PASSWORD` (sender defaults to eli.ws.kollman@gmail.com; override with `GMAIL_USER`); optional `SITE_URL`, `REPLY_TO`.
