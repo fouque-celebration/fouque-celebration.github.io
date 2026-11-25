@@ -1,7 +1,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { esc, sendMail } from "./mail.ts";
 
-const SITE_URL = Deno.env.get("SITE_URL") ?? "https://karinasax.github.io/fouque-2027/";
+const SITE_URL = Deno.env.get("SITE_URL") ?? "https://fouque-celebration.github.io/";
 const cors = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "content-type, authorization, apikey, x-client-info",

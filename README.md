@@ -1,5 +1,7 @@
 # Celebrating Jean-Pierre Fouque — invitation & RSVP
 
+Live at https://fouque-celebration.github.io/
+
 - `docs/` — static site (GitHub Pages): `index.html` public invitation + 2-step RSVP; `organizer/` private dashboard (email-code sign-in, CSV export).
 - `supabase/functions/` — Edge Functions on project `sfwrxbnzbamoxdyquwls`:
   - `rsvp` — validates and upserts a response by email, sends a confirmation via Gmail SMTP (465).
