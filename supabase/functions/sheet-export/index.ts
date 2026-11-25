@@ -2,7 +2,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 // Read-only CSV of all RSVPs for a Google Sheet: =IMPORTDATA("<function url>?token=<token>")
 // The token lives in the `sheet_export_tokens` table (service role only), never in this repo.
-const DAYS: Record<string, string> = { thu: "Thursday only", fri: "Friday only", both: "Both days" };
+const DAYS: Record<string, string> = { fri: "Friday only (talks & BBQ)", sat: "Saturday only (wine tasting)", both: "Both days" };
 
 const cell = (v: unknown) => {
   const s = v == null ? "" : String(v);

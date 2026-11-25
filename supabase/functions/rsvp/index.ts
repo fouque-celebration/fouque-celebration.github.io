@@ -11,9 +11,9 @@ const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { ...cors, "Content-Type": "application/json" } });
 
 const DAYS: Record<string, string> = {
-  thu: "Thursday, April 29 — Social outing & dinner",
-  fri: "Friday, April 30 — Academic talks",
-  both: "Both days — April 29 & 30",
+  fri: "Friday, April 30 — Talks & beach BBQ",
+  sat: "Saturday, May 1 — Wine tasting",
+  both: "Both days — April 30 & May 1",
 };
 const DIETS = ["No restrictions", "Vegetarian", "Vegan", "Pescatarian", "Gluten-free", "Dairy-free", "Kosher", "Halal", "Other (see notes)"];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -79,7 +79,7 @@ Deno.serve(async (req) => {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FFFFFF;border:1px solid #CBC5B8">
 <tr><td style="background:#14203A;padding:20px 28px;color:#EEE8DB;font:600 11px/1.3 Arial,sans-serif;letter-spacing:2px;text-transform:uppercase">UC Santa Barbara · CFMAR</td></tr>
 <tr><td style="padding:32px 28px 8px;color:#1A2338">
-<div style="font:600 11px/1.3 Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#575E6B">April 29 – 30, 2027 · Santa Barbara</div>
+<div style="font:600 11px/1.3 Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#575E6B">April 30 – May 1, 2027 · Santa Barbara</div>
 <div style="font:300 30px/1.15 Georgia,serif;margin-top:12px">Celebrating <i>Jean-Pierre Fouque</i></div>
 <p style="font:16px/1.55 Georgia,serif;margin:20px 0 0">${esc(intro)}${updated ? " Your response has been updated." : ""}</p>
 </td></tr>

@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Celebrating Jean-Pierre Fouque · April 29–30, 2027</title>
-<meta name="description" content="Join colleagues, collaborators, students, and friends for two days celebrating Jean-Pierre’s remarkable career and the community he has shaped. UC Santa Barbara, April 29–30, 2027.">
+<title>Celebrating Jean-Pierre Fouque · April 30 – May 1, 2027</title>
+<meta name="description" content="Join colleagues, collaborators, students, and friends for two days celebrating Jean-Pierre’s remarkable career and the community he has shaped. UC Santa Barbara, April 30 – May 1, 2027.">
 <meta property="og:title" content="Celebrating Jean-Pierre Fouque">
-<meta property="og:description" content="Two days celebrating Jean-Pierre’s remarkable career · UC Santa Barbara · April 29–30, 2027 · Hosted by CFMAR">
+<meta property="og:description" content="Two days celebrating Jean-Pierre’s remarkable career · UC Santa Barbara · April 30 – May 1, 2027 · Hosted by CFMAR">
 <meta property="og:image" content="https://fouque-celebration.github.io/og.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -104,15 +104,15 @@ legend{padding:0;margin-bottom:12px}
 </aside>
 
 <main class="main">
-<p class="lbl">29 – 30 April 2027 · Santa Barbara</p>
+<p class="lbl">30 April – 1 May 2027 · Santa Barbara</p>
 <h1>Celebrating<br><em>Jean-Pierre Fouque</em></h1>
 <p class="lead">Join colleagues, collaborators, students, and friends for two days celebrating Jean-Pierre’s remarkable career and the community he has shaped.</p>
 
 <div class="sp"></div>
 <p class="lbl">Programme</p>
 <div class="prog">
-<div class="item"><span class="dot" aria-hidden="true"></span><div class="item-t"><span class="lbl" style="color:var(--ink)">Thursday · April 29</span><span class="item-h">Social outing &amp; dinner</span><span class="hint">Time and location to be announced</span></div></div>
-<div class="item"><span class="dot" aria-hidden="true"></span><div class="item-t"><span class="lbl" style="color:var(--ink)">Friday · April 30</span><span class="item-h">Academic talks</span><span class="hint">UC Santa Barbara · Program and location to follow</span></div></div>
+<div class="item"><span class="dot" aria-hidden="true"></span><div class="item-t"><span class="lbl" style="color:var(--ink)">Friday · April 30</span><span class="item-h">Academic talks &amp; beach BBQ</span><span class="hint">Talks at UC Santa Barbara, followed by a beach BBQ dinner · Program, times and locations to follow</span></div></div>
+<div class="item"><span class="dot" aria-hidden="true"></span><div class="item-t"><span class="lbl" style="color:var(--ink)">Saturday · May 1</span><span class="item-h">Wine tasting</span><span class="hint">Optional social outing · Details to follow</span></div></div>
 </div>
 <p class="hint" style="margin-top:40px">Hosted by CFMAR, the Center for Financial Mathematics &amp; Actuarial Research.</p>
 
@@ -145,9 +145,9 @@ legend{padding:0;margin-bottom:12px}
 <fieldset>
 <legend class="lbl">I will join for</legend>
 <div class="opts">
-<label class="opt"><input type="radio" name="days" value="thu"><span class="ring" aria-hidden="true"></span><span><span class="ot">Thursday, April 29</span><span class="os">Social outing &amp; dinner</span></span></label>
-<label class="opt"><input type="radio" name="days" value="fri"><span class="ring" aria-hidden="true"></span><span><span class="ot">Friday, April 30</span><span class="os">Academic talks</span></span></label>
-<label class="opt"><input type="radio" name="days" value="both" checked><span class="ring" aria-hidden="true"></span><span><span class="ot">Both days</span><span class="os">April 29 &amp; 30</span></span></label>
+<label class="opt"><input type="radio" name="days" value="fri" checked><span class="ring" aria-hidden="true"></span><span><span class="ot">Friday, April 30</span><span class="os">Talks &amp; beach BBQ</span></span></label>
+<label class="opt"><input type="radio" name="days" value="sat"><span class="ring" aria-hidden="true"></span><span><span class="ot">Saturday, May 1</span><span class="os">Wine tasting (optional)</span></span></label>
+<label class="opt"><input type="radio" name="days" value="both"><span class="ring" aria-hidden="true"></span><span><span class="ot">Both days</span><span class="os">April 30 &amp; May 1</span></span></label>
 </div>
 </fieldset>
 <div class="grid2">
@@ -188,7 +188,7 @@ legend{padding:0;margin-bottom:12px}
   var $=function(id){return document.getElementById(id)};
   var f=$('f'), s1=$('s1'), s2=$('s2'), done=$('done'), err=$('err'), btn=$('submit');
   var att=null;
-  var DAYS={thu:'Thursday, April 29 — Social outing & dinner',fri:'Friday, April 30 — Academic talks',both:'Both days — April 29 & 30'};
+  var DAYS={fri:'Friday, April 30 — Talks & beach BBQ',sat:'Saturday, May 1 — Wine tasting',both:'Both days — April 30 & May 1'};
 
   function show(step){
     s1.hidden=step!==1; s2.hidden=step!==2; done.hidden=step!==3;
@@ -216,7 +216,7 @@ legend{padding:0;margin-bottom:12px}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail('Please enter a valid email address.',$('email'));
     var dayEl=f.querySelector('input[name=days]:checked');
     var body={attending:att==='yes',name:name,email:email,website:f.website.value};
-    if(att==='yes'){body.days=dayEl?dayEl.value:'both'; body.diet=$('diet').value; body.diet_notes=$('notes').value.trim()}
+    if(att==='yes'){body.days=dayEl?dayEl.value:'fri'; body.diet=$('diet').value; body.diet_notes=$('notes').value.trim()}
     btn.disabled=true; btn.textContent='Sending…';
     fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
       .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})

@@ -75,7 +75,7 @@ tr:last-child td{border-bottom:0}
 <div class="bar">
 <div class="l">
 <label><span class="lbl" style="display:block;margin-bottom:6px">Search</span><input type="search" id="q" placeholder="Name or email"></label>
-<label><span class="lbl" style="display:block;margin-bottom:6px">Show</span><select id="flt"><option value="all">All responses</option><option value="yes">Attending</option><option value="no">Not attending</option><option value="thu">Thursday dinner</option><option value="fri">Friday talks</option></select></label>
+<label><span class="lbl" style="display:block;margin-bottom:6px">Show</span><select id="flt"><option value="all">All responses</option><option value="yes">Attending</option><option value="no">Not attending</option><option value="fri">Friday talks &amp; BBQ</option><option value="sat">Saturday wine tasting</option></select></label>
 </div>
 <div class="l"><button class="btn ghost" id="refresh" type="button">Refresh</button><button class="btn" id="csv" type="button">Download CSV</button></div>
 </div>
@@ -93,7 +93,7 @@ tr:last-child td{border-bottom:0}
   var API='https://sfwrxbnzbamoxdyquwls.supabase.co/functions/v1/organizer';
   var $=function(id){return document.getElementById(id)};
   var KEY='fq_org_token', rows=[], sortK='updated_at', sortDir=-1, email='';
-  var DAYS={thu:'Thursday',fri:'Friday',both:'Both days'};
+  var DAYS={fri:'Friday',sat:'Saturday',both:'Both days'};
   function call(body){return fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json().then(function(j){if(!r.ok)throw Object.assign(new Error(j.error||'Request failed'),{status:r.status});return j})})}
   function tok(){try{return sessionStorage.getItem(KEY)}catch(e){return null}}
   function setTok(t){try{t?sessionStorage.setItem(KEY,t):sessionStorage.removeItem(KEY)}catch(e){}}
@@ -123,8 +123,8 @@ tr:last-child td{border-bottom:0}
   function fmt(d){return new Date(d).toLocaleString(undefined,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})}
   function stats(){
     var yes=rows.filter(function(r){return r.attending}), no=rows.length-yes.length;
-    var thu=yes.filter(function(r){return r.days==='thu'||r.days==='both'}).length, fri=yes.filter(function(r){return r.days==='fri'||r.days==='both'}).length;
-    var s=[['Responses',rows.length],['Attending',yes.length],['Not attending',no],['Thursday dinner',thu],['Friday talks',fri]];
+    var fri=yes.filter(function(r){return r.days==='fri'||r.days==='both'}).length, sat=yes.filter(function(r){return r.days==='sat'||r.days==='both'}).length;
+    var s=[['Responses',rows.length],['Attending',yes.length],['Not attending',no],['Friday talks & BBQ',fri],['Saturday wine tasting',sat]];
     var box=$('stats');box.textContent='';
     s.forEach(function(x){var d=document.createElement('div');d.className='stat';var l=document.createElement('span');l.className='lbl';l.textContent=x[0];var b=document.createElement('b');b.textContent=x[1];d.appendChild(l);d.appendChild(b);box.appendChild(d)});
     var dc={};yes.forEach(function(r){if(r.diet&&r.diet!=='No restrictions')dc[r.diet]=(dc[r.diet]||0)+1});
@@ -136,8 +136,8 @@ tr:last-child td{border-bottom:0}
     return rows.filter(function(r){
       if(q&&(r.name+' '+r.email).toLowerCase().indexOf(q)<0)return false;
       if(f==='yes')return r.attending; if(f==='no')return !r.attending;
-      if(f==='thu')return r.attending&&(r.days==='thu'||r.days==='both');
       if(f==='fri')return r.attending&&(r.days==='fri'||r.days==='both');
+      if(f==='sat')return r.attending&&(r.days==='sat'||r.days==='both');
       return true;
     }).sort(function(a,b){var x=a[sortK],y=b[sortK];x=x==null?'':x;y=y==null?'':y;return (x>y?1:x<y?-1:0)*sortDir});
   }
@@ -152,11 +152,11 @@ tr:last-child td{border-bottom:0}
     });
   }
   $('csv').addEventListener('click',function(){
-    var head=['Name','Email','Attending','Days','Thursday dinner','Friday talks','Dietary preference','Dietary notes','First submitted','Last updated','Times submitted'];
+    var head=['Name','Email','Attending','Days','Friday talks & BBQ','Saturday wine tasting','Dietary preference','Dietary notes','First submitted','Last updated','Times submitted'];
     var q=function(v){v=v==null?'':String(v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};
     var lines=[head.map(q).join(',')];
     rows.slice().sort(function(a,b){return a.name.localeCompare(b.name)}).forEach(function(r){
-      lines.push([r.name,r.email,r.attending?'Yes':'No',r.attending?DAYS[r.days]:'',r.attending&&(r.days==='thu'||r.days==='both')?'Yes':'No',r.attending&&(r.days==='fri'||r.days==='both')?'Yes':'No',r.attending?r.diet:'',r.diet_notes,r.created_at,r.updated_at,r.submit_count].map(q).join(','));
+      lines.push([r.name,r.email,r.attending?'Yes':'No',r.attending?DAYS[r.days]:'',r.attending&&(r.days==='fri'||r.days==='both')?'Yes':'No',r.attending&&(r.days==='sat'||r.days==='both')?'Yes':'No',r.attending?r.diet:'',r.diet_notes,r.created_at,r.updated_at,r.submit_count].map(q).join(','));
     });
     var blob=new Blob(['﻿'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
     var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fouque-rsvps-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
